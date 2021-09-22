@@ -2,23 +2,23 @@ import pandas as pd
 import csv
 
 '''
-READING IN THE DATA
+Reading in the data
 '''
-#weatherData = pd.read_csv('decision_tree_writing\weather_play.csv')
-#print(weatherData.head())
-filename = 'decision_tree_writing\weather_play.csv'
-attributes = []
-days = []
+def readIn(file):
+    #weatherData = pd.read_csv(file)
+    #print(weatherData.head())
+    attributes = []
+    days = []
 
-with open(filename, 'r') as csvfile:
-    csvreader = csv.reader(csvfile)
-    
-    attributes = next(csvreader)
-    for row in csvreader:
-        days.append(row)
+    with open(file, 'r') as csvfile:
+        csvreader = csv.reader(csvfile)
+        
+        attributes = next(csvreader)
+        for row in csvreader:
+            days.append(row)
 
-#print('Attribute names are: ' + ', '.join(attribute for attribute in attributes))
-#print(days[2])
+    #print('Attribute names are: ' + ', '.join(attribute for attribute in attributes))
+    #print(days[0])
 
 """
 General outline of a decision tree algorithm:
@@ -78,11 +78,21 @@ def giniImpurity(set, totalNum):
 
 
 
+def main():
+    print("Starting decision tree making")
+    readIn('decision_tree_writing\weather_play.csv')
+
+
+if __name__ == "__main__":
+    main()
+
 #---------#
 
 #need? maybe not, but this is how trees are displaced conceptually in the tutorials
 class Node:
-    def __init__(self):
+    def __init__(self, days, attributes):
+        self.days = days
+        self.attributes = attributes
         self.n = None
         self.left = None
         self.center = None
@@ -90,3 +100,4 @@ class Node:
         #other things
     #directed graph implementation?
     #function to determine path as variable of node?
+
