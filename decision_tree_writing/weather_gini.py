@@ -1,4 +1,4 @@
-import pandas as pd
+import tree
 import csv
 
 '''
@@ -85,19 +85,4 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-#---------#
-
-#need? maybe not, but this is how trees are displaced conceptually in the tutorials
-class Node:
-    def __init__(self, days, attributes):
-        self.days = days
-        self.attributes = attributes
-        self.n = None
-        self.left = None
-        self.center = None
-        self.right = None
-        #other things
-    #directed graph implementation?
-    #function to determine path as variable of node?
 
