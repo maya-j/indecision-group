@@ -5,20 +5,24 @@ import csv
 Reading in the data
 '''
 def readIn(file):
-    #weatherData = pd.read_csv(file)
-    #print(weatherData.head())
     attributes = []
-    days = []
+    days = {}
 
     with open(file, 'r') as csvfile:
         csvreader = csv.reader(csvfile)
         
         attributes = next(csvreader)
-        for row in csvreader:
-            days.append(row)
+        attributes.remove("Day")
+        attributes.remove("Play?")
 
-    #print('Attribute names are: ' + ', '.join(attribute for attribute in attributes))
-    #print(days[0])
+        for row in csvreader:
+            day = row.pop(0)
+            play = 1 if row.pop(-1)=="Yes" else 0
+            days[day] = (row, play)
+
+    print('Attribute names are: ' + ', '.join(attribute for attribute in attributes))
+    print(days)
+    return days, attributes
 
 """
 General outline of a decision tree algorithm:
@@ -80,7 +84,7 @@ def giniImpurity(set, totalNum):
 
 def main():
     print("Starting decision tree making")
-    readIn('decision_tree_writing\weather_play.csv')
+    days, attributes = readIn('decision_tree_writing\weather_play.csv')
 
 
 if __name__ == "__main__":
