@@ -84,7 +84,7 @@ def giniImpurity(set, totalNum):
 
 def main():
     print("Starting decision tree making")
-    days, attributes = readIn('decision_tree_writing\weather_play.csv')
+    days, attributes = readIn('weather_play.csv')
 
 
 if __name__ == "__main__":
