@@ -1,4 +1,6 @@
-import tree
+from tree import Tree
+from tree import Node
+from tree import Data
 import csv
 
 '''
@@ -16,7 +18,7 @@ def readIn(file):
         attributes.remove("Play?")
 
         for row in csvreader:
-            day = row.pop(0)
+            day = int(row.pop(0))
             play = 1 if row.pop(-1)=="Yes" else 0
             days[day] = (row, play)
 
@@ -46,8 +48,13 @@ def attributeValues(attributes, days):
 
     return atrbValues
 
-def split(parentSet, attribute):
+
+def split(parentSet, attribute, atrbValues):
+    #identifies splits
+    #calculates info gain for each
+    #identifies best and splits on that
     informationGain = 0
+    #for attribute in atrbValues
     
 
 """
@@ -57,25 +64,40 @@ General idea?: find all potential splits -> run information gain on each -> info
 
 #general idea - can customize to data structures later
 #parameters: parent set, sets of children?
-def informationGain(numChildren, set):
+def informationGain(parent):
     #EDIT pass parent to giniImpurity
-    parentTotal = 0
+    parentGini = giniImpurity(parent)
     #initialize these variables
     childrenTotalSum = 0
     avgChildrenTotal = 0
+
+    numChildren = (2 if parent.center == None else 3)
 
     for child in numChildren:
         #do gini impurity for each
         childrenTotalSum += giniImpurity()
     avgChildrenTotal = childrenTotalSum / numChildren
 
-#general idea - can customize to data structures later
-def giniImpurity(set, totalNum):
-    #set of format [# in catg 1, # in catg 2, ..., # in catg n]
-    giniImpurity = 1
-    for category in set:
-        giniImpurity -= (category/totalNum)**2
+    
+#calculates the gini impurity for a single node
+def giniImpurity(datanode):
+    totalNum = datanode.getNumDays()
 
+    play = []
+    yesplay = 0
+    noplay = 0
+    
+    for day in datanode.getDays():
+        if (datanode.getDays().get(day)[1] == 1):
+            yesplay += 1
+        else:
+            noplay += 1
+
+    print("Yes: ", yesplay , ", No: " , noplay, ", total days: ", totalNum)
+        
+    giniImpurity = 1 - (yesplay/totalNum)**2 - (noplay/totalNum)**2
+    print(giniImpurity)
+    
     return giniImpurity
 
 
@@ -83,15 +105,25 @@ def giniImpurity(set, totalNum):
 def main():
     print("Starting decision tree making")
     days, attributes = readIn('weather_play.csv')
+
+    #print('Attribute names are: ' + ', '.join(attribute for attribute in attributes))
+    #print(days)
+    #print('\n')
+
     
-    print('Attribute names are: ' + ', '.join(attribute for attribute in attributes))
-    print(days)
-    print('\n')
-    
+    ourTree = Tree()
+    root = Node(days, attributes)
+    ourTree.root = root
+
+    #print(ourTree.root)
+    giniImpurity(ourTree.root)    
     atrbValues = attributeValues(attributes, days)
     print(atrbValues)
+    
 
 
 if __name__ == "__main__":
     main()
+
+
 
