@@ -41,5 +41,8 @@ class Tree:
     #questions:
         # how to increase level - add an add function to tree
 
-    def levelUpdate(self, currentLevel):
-        return currentLevel+1
+    """this method is called in the function when creating 
+       a level and updates the variable totalLevel
+    """
+    def levelUpdate(self):
+        return self.totalLevels +1
