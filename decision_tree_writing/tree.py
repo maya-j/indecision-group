@@ -40,3 +40,6 @@ class Tree:
 
     #questions:
         # how to increase level - add an add function to tree
+
+    def levelUpdate(self, currentLevel):
+        return currentLevel+1
