@@ -19,6 +19,12 @@ class Node:
     
     def getData(self):
         return self.data
+    
+    def getDays(self):
+        return self.data.days
+
+    def getNumDays(self):
+        return len(self.data.days)
 
     def setLeft(self, node):
         self.left = node
