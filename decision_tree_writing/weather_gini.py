@@ -20,8 +20,6 @@ def readIn(file):
             play = 1 if row.pop(-1)=="Yes" else 0
             days[day] = (row, play)
 
-    print('Attribute names are: ' + ', '.join(attribute for attribute in attributes))
-    print(days)
     return days, attributes
 
 """
@@ -43,7 +41,7 @@ def attributeValues(attributes, days):
     #  values as value (i.e sunny/cloud/rainy, hot/mild, etc)
     for atrb in attributes:
         index = attributes.index(atrb)
-        allValues = [day[index] for day in days]
+        allValues = [days.get(day)[0][index] for day in days]
         atrbValues[atrb] = sorted(set(allValues))
 
     return atrbValues
@@ -85,6 +83,13 @@ def giniImpurity(set, totalNum):
 def main():
     print("Starting decision tree making")
     days, attributes = readIn('weather_play.csv')
+    
+    print('Attribute names are: ' + ', '.join(attribute for attribute in attributes))
+    print(days)
+    print('\n')
+    
+    atrbValues = attributeValues(attributes, days)
+    print(atrbValues)
 
 
 if __name__ == "__main__":
