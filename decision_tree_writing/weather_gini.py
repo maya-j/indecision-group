@@ -19,7 +19,8 @@ def readIn(file):
 
         for row in csvreader:
             day = int(row.pop(0))
-            play = 1 if row.pop(-1)=="Yes" else 0
+            #play = 1 if row.pop(-1)=="Yes" else 0
+            play = row.pop(-1)
             days[day] = (row, play)
 
     return days, attributes
@@ -49,7 +50,7 @@ def attributeValues(attributes, days):
     return atrbValues
 
 
-def split(parentSet, attribute, atrbValues):
+def split(nodeToSplit, attributes, atrbValues):
     #identifies splits
     #calculates info gain for each
     #identifies best and splits on that
@@ -116,9 +117,10 @@ def main():
     ourTree.root = root
 
     #print(ourTree.root)
-    giniImpurity(ourTree.root)    
+    giniImpurity(ourTree.getRoot())    
     atrbValues = attributeValues(attributes, days)
     print(atrbValues)
+    print(ourTree.getRoot().getDays())
     
 
 
