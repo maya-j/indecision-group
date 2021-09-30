@@ -1,39 +1,48 @@
 #implementation of a tree for the decision trees
 
-#data for each node
-class Data:
-    def __init__(self, days, attributes):
-        self.days = days
-        self.attributes = attributes
-
 #one node of the decision tree
 class Node:
-    def __init__(self, days, attributes, level = 0):
-        self.data = Data(days, attributes)
+    def __init__(self, data, level = 0):
+        self.data = data
         self.level = level
-        self.left = None
-        self.center = None
-        self.right = None
+        self.children = []
+        self.numChildren = 0
+        self.splitOn = None
         #could be good to know?
         self.attributeSplitOn = None
-    
+
     def getData(self):
         return self.data
+
+    def getNumData(self):
+        return len(self.data)
+
+    def addChild(self, node):
+        self.children.append(node)
+        self.numChildren += 1
+
+    def getChildren(self):
+        return self.children
+
+    def getChildAt(self, position):
+        return self.children[position]
+
+    def getNumChildren(self):
+        return self.numChildren
     
-    def getDays(self):
-        return self.data.days
+    def getLevel(self):
+        return self.level
 
-    def getNumDays(self):
-        return len(self.data.days)
+    def getSplitOn(self):
+        return self.splitOn
 
-    def setLeft(self, node):
-        self.left = node
-    
-    def setCenter(self, node):
-        self.center = node
+    def setSplitOn(self, split):
+        self.splitOn = split
 
-    def setRight(self, node):
-        self.right = node
+    def __str__(self):
+        return "Level " + str(self.level) + ", Split on: " + str(self.splitOn) + " - Days: " + str(self.data.keys())
+
+
 
 #tree to hold the decision tree
 class Tree:
@@ -44,11 +53,27 @@ class Tree:
     def getRoot(self):
         return self.root
 
+    def setRoot(self, root):
+        self.root = root
+
+    def printHelper(self, node):
+        if node == None:
+            return
+        for i in range (node.getLevel()):
+            print("\t", end = "")
+        print(node)
+        for child in node.getChildren():
+            self.printHelper(child)
+    
+    def printTree(self):
+        self.printHelper(self.root)
+
+
     #questions:
         # how to increase level - add an add function to tree
 
     """this method is called in the function when creating 
        a level and updates the variable totalLevel
     """
-    def levelUpdate(self):
-        return self.totalLevels +1
+    def levelIncrease(self):
+        self.totalLevels += 1
