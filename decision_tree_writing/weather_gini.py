@@ -190,7 +190,10 @@ def fillLevel(node, atrbValues):
     #fillLevel(node.getRight(), atrbValues)
     #fillLevel(node.getCenter(), atrbValues)
 
+def splitdata(data, start, range):
+    return data[start:range]
 
+    
 def main():
     print("Starting decision tree making")
     global attributes
